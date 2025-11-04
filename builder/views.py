@@ -11,7 +11,7 @@ from .models import Mockup
 from .tasks import mockup_builder
 
 
-class MockupCreateView(CreateAPIView):
+class MockupCreateAPIView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     model = Mockup
     serializer_class = MockupSerializer
@@ -22,18 +22,6 @@ class MockupCreateView(CreateAPIView):
         task_id = mockup_builder.delay(original.data['id'])
         result = {'task_id': str(task_id), 'status': 'PENDING', 'message': 'ساخت تصویر آغاز شد.'}
         return Response(result)
-
-
-class MockupListView(ListAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Mockup.objects.all()
-    model = Mockup
-    serializer_class = MockupSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ['text']
-
-    def get_queryset(self):
-        return Mockup.objects.filter()
 
 
 class MockupStatusAPIView(APIView):
@@ -53,3 +41,16 @@ class MockupStatusAPIView(APIView):
             "result": shirts_url
         }
         return Response(response)
+
+
+class MockupListAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Mockup.objects.all()
+    model = Mockup
+    serializer_class = MockupSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ['text']
+
+    def get_queryset(self):
+        return Mockup.objects.filter(user=self.request.user)
+

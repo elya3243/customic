@@ -27,8 +27,8 @@
   - `DressSerializer`: سریالایزر برای تصاویر  
 
 - **views.py**  
-  - `MockupCreateView`: ایجاد mockup جدید و شروع تسک Celery  
-  - `MockupListView`: مشاهده لیست mockupها  
+  - `MockupCreateAPIView`: ایجاد mockup جدید و شروع تسک Celery  
+  - `MockupListAPIView`: مشاهده لیست mockupها  
   - `MockupStatusAPIView`: بررسی وضعیت تسک و دریافت تصاویر نهایی  
 
 - **tasks.py**  

@@ -16,6 +16,5 @@ class MockupSerializer(serializers.ModelSerializer):
         exclude = ('user',)
 
     def create(self, validated_data):
-        if self.context['request'].user.is_authenticated:
-            validated_data['user'] = self.context['request'].user
+        validated_data['user'] = self.context['request'].user
         return super(MockupSerializer, self).create(validated_data)
