@@ -1,5 +1,3 @@
-import time
-
 from celery import shared_task
 import os
 from django.conf import settings
@@ -10,10 +8,9 @@ from builder.models import Mockup, Dress
 
 @shared_task()
 def mockup_builder(mockup_id):
-    time.sleep(30)
     mockup = Mockup.objects.get(pk=mockup_id)
     image_folder = os.path.join(settings.BASE_DIR, 'static', 'shirts')
-    output_folder = os.path.join(settings.MEDIA_ROOT, 'edited')
+    output_folder = os.path.join(settings.MEDIA_ROOT, f'edited/{mockup.id}')
     os.makedirs(output_folder, exist_ok=True)
     font = ImageFont.truetype("arial.ttf", 60)
     text = mockup.text
